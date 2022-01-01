@@ -45,22 +45,21 @@ public class ButtonEventHandler implements EventHandler<ActionEvent> {
 
 		// Bouton "Ajouter la tâche..."
 		case "adds_btn":
-			model.setAction (Action.ADDS);//Question 4
-			if (model.getDescription() == null)
-				view.showModalWindow("ERROR", Code.NOT_DEFINED.toString(), "OK");
-			else if (model.getPriority() == null)
-				view.showModalWindow("ERROR", Code.NOT_DEFINED.toString(), "OK");
-			else if (model.getPriority().getValue() < Priorities.HIGH.getValue())
-				view.showModalWindow("ERROR", Code.BAD_PRIORITY.toString(), "OK");
-			else if (model.getDescription().length() < 4)
-				view.showModalWindow("ERROR", Code.TOO_SHORT_DESCRIPTION_TEXT.toString(), "OK");
-			else
-				try {//Question 5
+			try {
 					model.push();
-				} catch (TaskException e) {
+					model.setAction(Action.ADDS); //Question 4 :  aller vers l'état erreur
+			} catch (TaskException e) {
+					if (model.getDescription() == null)
+						view.showModalWindow("ERROR", Code.NOT_DEFINED.toString(), "OK");
+					else if (model.getPriority() == null) 
+						view.showModalWindow("ERROR", Code.NOT_DEFINED.toString(), "OK");
+					else if (model.getPriority().getValue() < Priorities.HIGH.getValue())
+						view.showModalWindow("ERROR", Code.BAD_PRIORITY.toString(), "OK");
+					else if (model.getDescription().length() < 4)
+						view.showModalWindow("ERROR", Code.TOO_SHORT_DESCRIPTION_TEXT.toString(), "OK");
 					model.setAction (Action.ERROR);
 					System.out.println (e.error());
-				}
+			}			
 			// On met à jour la vue
 			view.update(model);
 			break;
