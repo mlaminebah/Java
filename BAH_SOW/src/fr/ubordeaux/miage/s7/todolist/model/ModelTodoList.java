@@ -84,6 +84,7 @@ public class ModelTodoList implements TodoList,Observable /* Question 3.b : impl
 	}
 	public void push() throws TaskException /* Question 3.1*/ {
 		//Question 5.2
+		Task t = new Task(getDescription(), priority);
 		if (tasks.contains(t)) throw new TaskException(description, "ALREADY_EXIST");
 		else
 			push (t);
